@@ -6,7 +6,6 @@ const props = defineProps({
   type: { type: String, default: 'button' },
   disabled: { type: Boolean, default: false },
   goto: { type: String, default: null },
-  inCart: { type: Boolean, default: false },
 });
 
 const isLink = computed(() => !!props.href);
@@ -15,8 +14,8 @@ const isLink = computed(() => !!props.href);
 <template>
   <component
     :is="isLink ? 'a' : 'button'"
-    class="button"
-    :class="{ 'is-disabled': disabled, 'is-in-cart': inCart }"
+    class="btn"
+    :class="{ 'is-disabled': disabled }"
     :href="isLink ? (disabled ? null : href) : null"
     :type="!isLink ? type : null"
     :disabled="!isLink ? disabled : null"
@@ -30,7 +29,7 @@ const isLink = computed(() => !!props.href);
 <style scoped lang="scss">
 @use '@helpers' as *;
 
-.button {
+.btn {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -41,7 +40,7 @@ const isLink = computed(() => !!props.href);
   padding-inline: rem(25);
   font-weight: 600;
   color: var(--color-white);
-  background-color: transparent;
+  background-color: var(--accent-color);
   border: 1px solid var(--color-white);
   border-radius: var(--border-radius);
   text-decoration: none;
@@ -52,34 +51,7 @@ const isLink = computed(() => !!props.href);
 
   @include hover {
     &:not(.is-disabled) {
-      color: var(--color-orange);
-      border: 1px solid var(--color-orange);
-    }
-  }
-
-  &--min {
-    padding-block: rem(10);
-    padding-inline: rem(20);
-    color: var(--color-black);
-    border: 1px solid var(--color-orange);
-
-    @include hover {
-      &:not(.is-disabled) {
-        color: var(--color-black);
-        background-color: var(--color-orange);
-      }
-    }
-  }
-
-  &--card {
-    padding: fluid(12, 10);
-    color: var(--color-black);
-    border: 1px solid var(--color-orange);
-
-    &.is-in-cart {
-      color: var(--color-black);
-      background-color: var(--color-orange);
-      cursor: default;
+      opacity: 0.7;
     }
   }
 
@@ -87,6 +59,21 @@ const isLink = computed(() => !!props.href);
     opacity: 0.5;
     cursor: default;
     pointer-events: none;
+  }
+
+  &--watched {
+    &__icon {
+      width: 15px;
+      margin-left: 10px;
+    }
+  }
+
+  &--delete {
+    background-color: #ff2a2a;
+  }
+
+  &--green {
+    background-color: #25b444;
   }
 }
 </style>
