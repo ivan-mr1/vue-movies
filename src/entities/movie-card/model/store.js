@@ -63,5 +63,14 @@ export const useMovieStore = defineStore('movieStore', {
     setActiveTab(id) {
       this.activeTab = id;
     },
+    toggleWatched(id) {
+      const movie = this.movies.find((el) => el.id === id);
+      if (movie) {
+        movie.isWatched = !movie.isWatched;
+      }
+    },
+    deleteMovie(id) {
+      this.movies = this.movies.filter((el) => el.id !== id);
+    },
   },
 });

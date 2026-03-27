@@ -1,3 +1,12 @@
+<script setup>
+defineProps({
+  movie: {
+    type: Object,
+    required: true,
+  },
+});
+</script>
+
 <template>
   <div class="movie">
     <div class="movie__inner">
@@ -7,11 +16,7 @@
       </time>
       <span class="movie__overview">{{ movie.overview }}</span>
       <div class="movie__buttons">
-        <Button class="btn--watched">
-          <span v-if="!movie.isWatched">Watched</span>
-          <span v-else>Unwatched</span>
-        </Button>
-        <Button class="btn--delete">Delete</Button>
+        <slot name="actions" />
       </div>
     </div>
     <img
@@ -25,18 +30,9 @@
   </div>
 </template>
 
-<script setup>
-import Button from '@/shared/ui/form/button';
-
-defineProps({
-  movie: {
-    type: Object,
-    required: true,
-    default: () => {},
-  },
-});
-</script>
 <style lang="scss" scoped>
+@use '@helpers' as *;
+
 .movie {
   --size-image: 150px;
   display: grid;
