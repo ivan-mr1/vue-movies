@@ -19,10 +19,20 @@ const movieStore = useMovieStore();
           <Button :class="{ 'btn--green': movieStore.activeTab === 1 }">Favorite</Button>
           <Button :class="{ 'btn--green': movieStore.activeTab === 2 }">Search</Button>
         </div>
+
         <div class="movies" v-if="movieStore.activeTab === 1">
-          <h2 class="movies__title">All movies</h2>
-          <Movie v-for="movie of movieStore.movies" :key="movie.id" :movie="movie" />
+          <div>
+            <h2 class="movies__title">
+              Watched movies: {{ movieStore.watchedMovies.length }} films
+            </h2>
+            <Movie v-for="movie of movieStore.watchedMovies" :key="movie.id" :movie="movie" />
+          </div>
+          <div>
+            <h2 class="movies__title">All movies: {{ movieStore.totalCountMovies }} films</h2>
+            <Movie v-for="movie of movieStore.movies" :key="movie.id" :movie="movie" />
+          </div>
         </div>
+
         <div class="search" v-if="movieStore.activeTab === 2">Search movie</div>
       </div>
     </div>
@@ -37,9 +47,11 @@ const movieStore = useMovieStore();
 
 .movies {
   &__title {
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 600;
-    text-align: center;
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
   }
 }
 
