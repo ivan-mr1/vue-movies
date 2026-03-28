@@ -13,7 +13,6 @@ const searchStore = useSearchStore();
 
 const AddMovie = () => {
   searchStore.addToUserMovies(props.movie);
-  console.log('add');
 };
 </script>
 

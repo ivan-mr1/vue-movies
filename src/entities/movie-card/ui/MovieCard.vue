@@ -27,7 +27,7 @@ defineProps({
       </div>
     </div>
     <img
-      :src="movie.poster_path"
+      :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`"
       :alt="movie.original_title"
       loading="lazy"
       width="150"
