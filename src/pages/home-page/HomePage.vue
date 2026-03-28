@@ -1,7 +1,9 @@
 <script setup>
 import { useMovieStore } from '@/entities/movie-card/model/store';
+import SearchMovie from '@/features/search-movie/ui/SearchMovie.vue';
 import Button from '@/shared/ui/form/button';
 import MovieList from '@/widgets/movie-list';
+import SearchResults from '@/widgets/search/ui/SearchResults.vue';
 
 const movieStore = useMovieStore();
 
@@ -27,7 +29,10 @@ const setTab = (id) => {
         <MovieList title="All movies" :movies="movieStore.movies" />
       </div>
 
-      <div class="search" v-if="movieStore.activeTab === 2">Search movie</div>
+      <div class="search" v-if="movieStore.activeTab === 2">
+        <SearchMovie />
+        <SearchResults />
+      </div>
     </div>
   </main>
 </template>
@@ -38,16 +43,6 @@ const setTab = (id) => {
 .films__wrapper {
   max-width: 650px;
   margin: 0 auto;
-}
-
-.movies {
-  &__title {
-    font-size: 22px;
-    font-weight: 600;
-    &:not(:last-child) {
-      margin-bottom: 16px;
-    }
-  }
 }
 
 .tabs {

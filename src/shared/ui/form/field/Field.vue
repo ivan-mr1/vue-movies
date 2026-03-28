@@ -28,9 +28,9 @@ defineEmits(['update:modelValue']);
 
 .field {
   --field-color-label: #141216;
-  --field-color-label-active: #9333ea;
+  --field-color-label-active: #2e2d2f;
   --field-color-border: #c7c7c7;
-  --field-color-active: #9333ea;
+  --field-color-active: #2e2d2f;
   --field-color-focus-bcg: #f5f5f5;
 
   position: relative;

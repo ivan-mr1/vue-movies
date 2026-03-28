@@ -35,7 +35,7 @@ export const useMovieStore = defineStore('movieStore', {
         original_title: 'The Running Man',
         overview:
           'In a dystopian future, Ben Richards enters a deadly reality show to save his family. Directed by Edgar Wright.',
-        poster_path: '/img/4.jpg', // Плейсхолдер для нового релиза
+        poster_path: '/img/4.jpg',
         release_date: '2025-11-14',
         isWatched: true,
       },
@@ -49,7 +49,7 @@ export const useMovieStore = defineStore('movieStore', {
         isWatched: false,
       },
     ],
-    activeTab: 1,
+    activeTab: 2,
   }),
   getters: {
     watchedMovies() {

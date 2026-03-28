@@ -4,6 +4,10 @@ defineProps({
     type: Object,
     required: true,
   },
+  isSearch: {
+    type: Boolean,
+    required: true,
+  },
 });
 </script>
 
@@ -15,8 +19,11 @@ defineProps({
         Release: {{ movie.release_date }}
       </time>
       <span class="movie__overview">{{ movie.overview }}</span>
-      <div class="movie__buttons">
+      <div class="movie__buttons" v-if="!isSearch">
         <slot name="actions" />
+      </div>
+      <div class="movie__buttons" v-else>
+        <slot name="actions-search" />
       </div>
     </div>
     <img
