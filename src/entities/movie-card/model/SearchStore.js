@@ -17,9 +17,9 @@ export const useSearchStore = defineStore('searchStore', () => {
     loader.value = false;
   };
 
-  const addToUserMovies = (obj) => {
+  const addToUserMovies = (object) => {
     const movieStore = useMovieStore();
-    movieStore.movies.push({ ...obj, isWatched: false });
+    movieStore.movies.push({ ...object, isWatched: false });
     movieStore.activeTab = 1;
   };
 
