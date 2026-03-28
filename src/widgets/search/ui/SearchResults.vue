@@ -10,7 +10,7 @@ const searchStore = useSearchStore();
   <Loader2 v-if="searchStore.loader" />
   <div v-else>
     <MovieCard v-for="movie of searchStore.movies" :key="movie.id" :movie="movie" :is-search="true">
-      <template #actions-search> <AddMovie :movie-id="movie.id" /> </template
+      <template #actions-search> <AddMovie :movie="movie" /> </template
     ></MovieCard>
   </div>
 </template>

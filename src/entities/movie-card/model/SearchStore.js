@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { useMovieStore } from './store';
 import { BASE_URL } from '@/shared/api/config';
 
 const url = BASE_URL;
@@ -15,7 +16,11 @@ export const useSearchStore = defineStore('searchStore', {
       const data = await res.json();
       this.movies = data.results;
       this.loader = false;
-      console.log(data);
+    },
+    addToUserMovies(obj) {
+      const movieStore = useMovieStore();
+      movieStore.movies.push({ ...obj, isWatched: false });
+      movieStore.activeTab = 1;
     },
   },
 });

@@ -1,18 +1,18 @@
 <script setup>
-import { useMovieStore } from '@/entities/movie-card';
+import { useSearchStore } from '@/entities/movie-card/model/SearchStore';
 import Button from '@/shared/ui/form/button';
 
 const props = defineProps({
-  movieId: {
-    type: Number,
+  movie: {
+    type: Object,
     required: true,
   },
 });
 
-const movieStore = useMovieStore();
+const searchStore = useSearchStore();
 
 const AddMovie = () => {
-  movieStore.deleteMovie(props.movieId);
+  searchStore.addToUserMovies(props.movie);
   console.log('add');
 };
 </script>
