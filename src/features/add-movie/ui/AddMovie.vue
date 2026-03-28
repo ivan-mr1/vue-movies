@@ -1,5 +1,5 @@
 <script setup>
-import { useSearchStore } from '@/entities/movie-card/model/SearchStore';
+import { useSearchStore } from '@/entities/movie-card';
 import Button from '@/shared/ui/form/button';
 
 const props = defineProps({

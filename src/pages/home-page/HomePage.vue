@@ -1,9 +1,9 @@
 <script setup>
-import { useMovieStore } from '@/entities/movie-card/model/store';
-import SearchMovie from '@/features/search-movie/ui/SearchMovie.vue';
+import { useMovieStore } from '@/entities/movie-card';
+import SearchMovie from '@/features/search-movie';
 import Button from '@/shared/ui/form/button';
 import MovieList from '@/widgets/movie-list';
-import SearchResults from '@/widgets/search/ui/SearchResults.vue';
+import SearchResults from '@/widgets/search';
 
 const movieStore = useMovieStore();
 
