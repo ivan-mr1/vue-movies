@@ -1,60 +1,85 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
-const props = defineProps(['modelValue', 'options', 'label']);
+const props = defineProps({
+  modelValue: {
+    type: [String, Number, null],
+    default: null,
+  },
+  options: {
+    type: Array,
+    default: () => [],
+  },
+  label: {
+    type: String,
+    default: 'Select option',
+  },
+});
+
 const emit = defineEmits(['update:modelValue']);
 
 const isOpen = ref(false);
-const el = ref(null);
+const selectRef = ref(null);
+
+const currentLabel = computed(() => {
+  const selectedOption = props.options.find((o) => o.value === props.modelValue);
+  return selectedOption ? selectedOption.label : props.label;
+});
+
+const isPlaceholder = computed(() => props.modelValue === null || props.modelValue === '');
 
 const toggle = () => (isOpen.value = !isOpen.value);
-const select = (opt) => {
+
+const selectOption = (opt) => {
   emit('update:modelValue', opt.value);
   isOpen.value = false;
 };
 
-const close = (e) => {
-  if (!el.value?.contains(e.target)) isOpen.value = false;
+const handleClickOutside = (e) => {
+  if (selectRef.value && !selectRef.value.contains(e.target)) {
+    isOpen.value = false;
+  }
 };
-onMounted(() => document.addEventListener('click', close));
-onUnmounted(() => document.removeEventListener('click', close));
 
-const getLabel = () =>
-  props.options.find((o) => o.value === props.modelValue)?.label || props.label;
+onMounted(() => document.addEventListener('click', handleClickOutside));
+onUnmounted(() => document.removeEventListener('click', handleClickOutside));
 </script>
 
 <template>
-  <div class="select" :class="{ 'is-open': isOpen }" ref="el">
-    <div class="select__field" @click="toggle">
-      <span class="select__value" :class="{ 'is-placeholder': !modelValue }">
-        {{ getLabel() }}
+  <div ref="selectRef" class="select" :class="{ 'is-open': isOpen }">
+    <div class="select__field" @click="toggle" role="button" aria-haspopup="listbox">
+      <span class="select__value" :class="{ 'is-placeholder': isPlaceholder }">
+        {{ currentLabel }}
       </span>
-      <svg class="select__icon" viewBox="0 0 20 20">
+
+      <svg class="select__icon" viewBox="0 0 20 20" width="20" height="20">
         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" fill="none" stroke-width="1.5" />
       </svg>
     </div>
 
-    <ul v-if="isOpen" class="select__list">
-      <li
-        v-for="opt in options"
-        :key="opt.value"
-        @click="select(opt)"
-        class="select__item"
-        :class="{ 'is-active': opt.value === modelValue }"
-      >
-        {{ opt.label }}
-      </li>
-    </ul>
+    <transition name="select-fade">
+      <ul v-if="isOpen" class="select__list" role="listbox">
+        <li
+          v-for="opt in options"
+          :key="opt.value"
+          class="select__item"
+          :class="{ 'is-active': opt.value === modelValue }"
+          role="option"
+          @click="selectOption(opt)"
+        >
+          {{ opt.label }}
+        </li>
+      </ul>
+    </transition>
   </div>
 </template>
 
 <style scoped lang="scss">
-@use '@helpers' as *;
-
 .select {
   position: relative;
   max-width: 200px;
   width: 100%;
+  font-family: inherit;
 
   &__field {
     height: 50px;
@@ -66,16 +91,26 @@ const getLabel = () =>
     border-radius: 8px;
     background: #fff;
     cursor: pointer;
-    transition: 0.2s;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
 
     &:hover {
-      border-color: var(--color-orange);
+      border-color: var(--color-orange, #f60);
+    }
+
+    .is-open & {
+      border-color: var(--color-orange, #f60);
+      box-shadow: 0 0 0 1px var(--color-orange, #f60);
     }
   }
 
   &__value {
     font-size: 16px;
-    color: var(--color-dark);
+    color: var(--color-dark, #181c29);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &.is-placeholder {
       color: #888;
@@ -83,14 +118,15 @@ const getLabel = () =>
   }
 
   &__icon {
-    width: 18px;
-    height: 18px;
-    transition: 0.3s;
+    flex-shrink: 0;
+    transition:
+      transform 0.3s,
+      color 0.3s;
     color: #181c29;
 
     .is-open & {
       transform: rotate(180deg);
-      color: var(--color-orange);
+      color: var(--color-orange, #f60);
     }
   }
 
@@ -107,23 +143,40 @@ const getLabel = () =>
     max-height: 240px;
     overflow-y: auto;
     padding: 4px 0;
+    margin: 0;
+    list-style: none;
   }
 
   &__item {
     padding: 10px 16px;
     font-size: 15px;
     cursor: pointer;
-    transition: 0.2s;
+    transition:
+      background 0.2s,
+      color 0.2s;
 
     &:hover {
       background: #f5f5f5;
     }
 
     &.is-active {
-      background: #fff5f0; // Легкий оттенок оранжевого
-      color: var(--color-orange);
+      background: #fff5f0;
+      color: var(--color-orange, #f60);
       font-weight: 600;
     }
   }
+}
+
+.select-fade-enter-active,
+.select-fade-leave-active {
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+
+.select-fade-enter-from,
+.select-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 </style>

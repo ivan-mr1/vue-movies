@@ -8,14 +8,10 @@ const socials = [
   { name: 'Instagram', url: 'https://www.instagram.com/', icon: instagram },
   { name: 'Whatsapp', url: 'https://wa.me/380', icon: whatsapp },
 ];
-
-const props = defineProps({
-  baseClass: String,
-});
 </script>
 
 <template>
-  <div :class="['soc1al', props.baseClass]">
+  <div :class="soc1al">
     <ul class="soc1al__list">
       <li v-for="social in socials" :key="social.name" class="soc1al__item">
         <a
@@ -34,8 +30,6 @@ const props = defineProps({
 </template>
 
 <style scoped lang="scss">
-@use '@helpers' as *;
-
 .soc1al {
   &__list {
     display: flex;

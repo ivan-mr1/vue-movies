@@ -15,4 +15,12 @@ export default defineConfig({
       '@helpers': fileURLToPath(new URL('./src/app/styles/helpers', import.meta.url)),
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@helpers" as *;`,
+        api: 'modern-compiler',
+      },
+    },
+  },
 });

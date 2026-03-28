@@ -1,9 +1,7 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
-  <div class="header__actions">
-  </div>
+  <div class="header__actions"></div>
 </template>
 
 <style scoped lang="scss">

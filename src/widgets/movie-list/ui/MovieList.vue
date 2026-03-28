@@ -4,13 +4,13 @@ import DeleteMovie from '@/features/delete-movie';
 import ToggleWatched from '@/features/toggle-watched';
 
 defineProps({
-  title: String,
-  movies: Array,
+  title: { type: String, default: '' },
+  movies: { type: Array, default: () => [] },
 });
 </script>
 <template>
   <div class="movie-list">
-    <h2 class="movies-list__title">{{ title }}: {{ movies.length }} films</h2>
+    <h2 class="movie-list__title">{{ title }}: {{ movies.length }} films</h2>
 
     <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" :is-search="false">
       <template #actions>
@@ -23,7 +23,7 @@ defineProps({
 <style lang="scss" scoped>
 @use '@helpers' as *;
 
-.movies-list {
+.movie-list {
   &__title {
     font-size: 22px;
     font-weight: 600;

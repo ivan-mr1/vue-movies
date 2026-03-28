@@ -8,11 +8,9 @@ import './styles/main.scss';
   <div class="wrapper">
     <div class="container">
       <Header />
-      <RouterView />
+      <main class="page">
+        <RouterView />
+      </main>
     </div>
   </div>
 </template>
-
-<style lang="scss">
-@use '@helpers' as *;
-</style>

@@ -1,21 +1,28 @@
 <script setup>
 defineProps({
-  title: String,
+  title: { type: String, default: '' },
   id: { type: String, required: true },
   type: { type: String, default: 'text' },
-  onChangeSearchInput: Function,
+  modelValue: { type: [String, Number], default: '' },
 });
 
-defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue']);
+
+const handleInput = (event) => {
+  emit('update:modelValue', event.target.value);
+};
 </script>
 
 <template>
   <div class="field">
-    <label :for="id" class="field__label">{{ title }}</label>
+    <label v-if="title" :for="id" class="field__label">
+      {{ title }}
+    </label>
     <input
       :id="id"
       :type="type"
-      @input="onChangeSearchInput"
+      :value="modelValue"
+      @input="handleInput"
       class="field__input"
       placeholder=" "
       autocomplete="off"
@@ -24,8 +31,6 @@ defineEmits(['update:modelValue']);
 </template>
 
 <style scoped lang="scss">
-@use '@helpers' as *;
-
 .field {
   --field-color-label: #141216;
   --field-color-label-active: #2e2d2f;

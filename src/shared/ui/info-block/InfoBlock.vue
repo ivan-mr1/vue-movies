@@ -1,10 +1,10 @@
 <script setup>
 defineProps({
-  imageUrl: String,
+  imageUrl: { type: String, default: '' },
   imageWidth: { type: Number, default: 120 },
   imageHeight: { type: Number, default: 120 },
-  title: String,
-  text: String,
+  title: { type: String, default: '' },
+  text: { type: String, default: '' },
 });
 </script>
 
@@ -24,8 +24,6 @@ defineProps({
 </template>
 
 <style scoped lang="scss">
-@use '@helpers' as *;
-
 .infoblock {
   display: flex;
   align-items: center;

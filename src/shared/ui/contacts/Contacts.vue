@@ -1,12 +1,11 @@
 <script setup>
-const props = defineProps({
-  baseClass: String,
-  contacts: Array,
+defineProps({
+  contacts: { type: Array, default: () => [] },
 });
 </script>
 
 <template>
-  <ul :class="['contacts', props.baseClass]">
+  <ul class="contacts">
     <li v-for="contact in contacts" :key="contact.name" class="contacts__item">
       <div class="contacts__link-icon">
         <svg
@@ -30,8 +29,6 @@ const props = defineProps({
 </template>
 
 <style scoped lang="scss">
-@use '@helpers' as *;
-
 .contacts {
   &__item {
     display: flex;
