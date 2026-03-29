@@ -1,14 +1,20 @@
 <script setup>
-import { useMovieStore } from '@/entities/movie-card';
+import SearchMovie from '@/features/search-movie';
 import SearchResults from '@/widgets/search';
-
-const movieStore = useMovieStore();
 </script>
 
 <template>
-  <div class="search" v-if="movieStore.activeTab === 2">
+  <div class="search-page">
+    <SearchMovie />
     <SearchResults />
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.search-page {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 16px;
+}
+</style>

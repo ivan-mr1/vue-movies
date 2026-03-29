@@ -8,12 +8,15 @@ export const useSearchStore = defineStore('searchStore', () => {
   const movies = ref([]);
 
   const getMovies = async (search) => {
-    if (!search || !search.trim()) return;
+    if (!search || !search.trim()) {
+      movies.value = [];
+      return;
+    }
 
     loader.value = true;
     try {
       const response = await searchMovie(search);
-      movies.value = response.data.results || [];
+      movies.value = response.data?.results || [];
     } catch (error) {
       console.error('[SearchStore] Error fetching movies:', error);
       movies.value = [];
@@ -22,9 +25,9 @@ export const useSearchStore = defineStore('searchStore', () => {
     }
   };
 
-  const addToUserMovies = (object) => {
+  const addToUserMovies = (movie) => {
     const movieStore = useMovieStore();
-    movieStore.movies.push({ ...object, isWatched: false });
+    movieStore.addMovie(movie);
   };
 
   return {

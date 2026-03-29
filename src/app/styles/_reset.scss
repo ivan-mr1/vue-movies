@@ -25,11 +25,11 @@ body {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--header-height, 80px);
+  scrollbar-gutter: stable; // резервирует место под скроллбар
 }
 
 body {
   line-height: 1;
-  scrollbar-gutter: stable; // резервирует место под скроллбар
   text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased; // Делает шрифты более аккуратными и тонкими на macOS и iOS
   -moz-osx-font-smoothing: grayscale;

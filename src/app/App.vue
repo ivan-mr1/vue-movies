@@ -9,7 +9,11 @@ import './styles/main.scss';
     <Header />
     <div class="container">
       <main class="page">
-        <RouterView />
+        <RouterView v-slot="{ Component }">
+          <transition name="fade" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </RouterView>
       </main>
     </div>
   </div>

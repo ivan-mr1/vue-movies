@@ -1,6 +1,7 @@
 <script setup>
 import { MovieCard } from '@/entities/movie-card';
 import DeleteMovie from '@/features/delete-movie';
+import ToggleFavorite from '@/features/toggle-favorite';
 import ToggleWatched from '@/features/toggle-watched';
 
 defineProps({
@@ -16,6 +17,7 @@ defineProps({
       <template #actions>
         <DeleteMovie :movie-id="movie.id" />
         <ToggleWatched :movie="movie" />
+        <ToggleFavorite :movie="movie" />
       </template>
     </MovieCard>
   </div>

@@ -1,27 +1,114 @@
 <script setup>
 defineProps({
-  list: {
-    type: Array,
-    default: () => [],
-  },
   isOpen: {
     type: Boolean,
     default: false,
   },
 });
+
+import { useMovieStore } from '@/entities/movie-card';
+
+const movieStore = useMovieStore();
+
+const handleTabChange = (id) => {
+  movieStore.setActiveTab(id);
+};
 </script>
 
 <template>
   <nav class="header__menu menu" :class="{ 'is-active': isOpen }" data-header-menu>
     <ul class="menu__list">
-      <li v-for="item in list" :key="item.name" class="menu__item">
-        <a
-          :href="item.href ? `#${item.href}` : '#'"
-          :data-goto="item.goto ? `.${item.goto}` : null"
+      <li class="menu__item">
+        <RouterLink :to="{ name: 'Home' }" class="menu__link hover-link">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="menu__icon"
+          >
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+          <span>Home</span>
+        </RouterLink>
+      </li>
+
+      <li class="menu__item">
+        <RouterLink
+          :to="{ name: 'Search' }"
           class="menu__link hover-link"
+          @click="handleTabChange(2)"
         >
-          {{ item.name }}
-        </a>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="menu__icon"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+          <span>Search</span>
+        </RouterLink>
+      </li>
+
+      <li class="menu__item">
+        <RouterLink :to="{ name: 'Favorite' }" class="menu__link hover-link">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="menu__icon"
+          >
+            <path
+              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
+            />
+          </svg>
+          <span>Favorites</span>
+        </RouterLink>
+      </li>
+
+      <li class="menu__item">
+        <RouterLink
+          :to="{ name: 'Watched' }"
+          class="menu__link hover-link"
+          @click="handleTabChange(1)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="menu__icon"
+          >
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+          <span>Watched</span>
+        </RouterLink>
       </li>
     </ul>
   </nav>
@@ -93,13 +180,26 @@ defineProps({
 
   &__link {
     color: var(--menu-link);
-
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     @media (max-width: em(767.98)) {
-      display: inline-flex;
-      align-items: center;
       height: 44px;
       font-size: rem(26);
     }
   }
+
+  &__icon {
+    flex-shrink: 0;
+  }
+}
+
+.exact-active-link {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.exact-active-link .menu__icon {
+  stroke: var(--accent-color);
 }
 </style>

@@ -38,7 +38,7 @@ defineOptions({
   --field-color-label: #ffffff;
   --field-color-label-active: #ffffff;
   --field-color-border: #ffffff;
-  --field-color-active: #2e2d2f;
+  --field-color-active: #ff9800;
   --field-color-focus-bcg: #ffffff;
 
   position: relative;
