@@ -1,5 +1,5 @@
 <script setup>
-import MovieCard from '@/entities/movie-card';
+import { MovieCard } from '@/entities/movie-card';
 import DeleteMovie from '@/features/delete-movie';
 import ToggleWatched from '@/features/toggle-watched';
 

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { useSearchStore } from '@/entities/movie-card/model/SearchStore';
+import { useSearchStore } from '../index';
 
 const searchStore = useSearchStore();
 const searchMovie = ref('');

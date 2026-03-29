@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { BASE_URL } from './config';
+
+const isDev = import.meta.env.DEV;
 
 export const apiClient = axios.create({
-  baseURL: BASE_URL,
+  baseURL: isDev ? '' : '/api',
   headers: {
     'Content-Type': 'application/json',
   },

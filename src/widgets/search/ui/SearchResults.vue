@@ -1,6 +1,6 @@
 <script setup>
-import { useSearchStore } from '@/entities/movie-card';
-import MovieCard from '@/entities/movie-card';
+import { useSearchStore } from '@/features/search-movie';
+import { MovieCard } from '@/entities/movie-card';
 import AddMovie from '@/features/add-movie';
 import { Loader2 } from '@/shared/ui/loaders';
 

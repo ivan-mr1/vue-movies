@@ -1,20 +1,34 @@
-import proxyHandler from './_lib/proxy-handler';
+import { sendProxyRequest } from './_lib/proxy';
 
-/**
- * Прокси-эндпоинт для списка пользователя (Mokki)
- * Поддерживает GET (получение) и POST (добавление)
- */
 export default async function handler(req, res) {
-  const STORAGE_TOKEN = process.env.REMOTE_STORAGE_API_TOKEN;
-  const STORAGE_URL = process.env.REMOTE_STORAGE_API_URL;
+  const API_URL = process.env.REMOTE_STORAGE_API_URL;
+  const API_TOKEN = process.env.REMOTE_STORAGE_API_TOKEN;
+  const { method, body, query } = req;
 
-  return proxyHandler(req, res, {
-    targetUrl: STORAGE_URL,
-    apiKey: STORAGE_TOKEN,
-    keyParam: null, // Ключ передаем не в URL, а в заголовке Authorization
+  if (!API_URL) {
+    return res.status(500).json({ error: 'Server setup error' });
+  }
+
+  let url = API_URL;
+  if (query.id) {
+    url += `/${query.id}`;
+  }
+
+  const config = {
+    method,
     headers: {
-      Authorization: `Bearer ${STORAGE_TOKEN}`,
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${API_TOKEN}`,
     },
-    cache: null, // Динамические списки не кэшируем
+  };
+
+  if (['POST', 'PUT', 'PATCH'].includes(method) && body) {
+    config.body = JSON.stringify(body);
+  }
+
+  return sendProxyRequest(req, res, {
+    url,
+    config,
+    errorPrefix: 'API MyList Error',
   });
 }

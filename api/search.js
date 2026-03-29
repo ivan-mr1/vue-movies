@@ -1,15 +1,22 @@
-import proxyHandler from './_lib/proxy-handler';
+import { sendProxyRequest } from './_lib/proxy';
 
-/**
- * Прокси-эндпоинт для поиска фильмов
- */
 export default async function handler(req, res) {
-  return proxyHandler(req, res, {
-    targetUrl: `${process.env.REMOTE_CONTENT_API_URL}/3/search/movie`,
-    apiKey: process.env.REMOTE_CONTENT_API_KEY,
-    keyParam: 'api_key', // Название параметра ключа
-    mapping: { q: 'query' }, // Маппинг параметра q фронтенда в query
-    extraParams: { language: 'ru-RU' },
-    cache: 's-maxage=3600, stale-while-revalidate',
+  const { q } = req.query;
+  const API_KEY = process.env.REMOTE_CONTENT_API_KEY;
+  const BASE_URL = process.env.REMOTE_CONTENT_API_URL;
+
+  if (!API_KEY || !BASE_URL) {
+    return res.status(500).json({ error: 'Server setup error' });
+  }
+
+  const params = new URLSearchParams({
+    api_key: API_KEY,
+    query: q || '',
+    language: 'ru-RU',
+  });
+
+  return sendProxyRequest(req, res, {
+    url: `${BASE_URL}/3/search/movie?${params}`,
+    errorPrefix: 'API Search Error',
   });
 }
