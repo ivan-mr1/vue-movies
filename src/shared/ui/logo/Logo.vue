@@ -21,7 +21,7 @@ defineProps({
       :height="height"
       :loading="lazy ? 'lazy' : 'eager'"
     />
-    <span v-else>{{ text }}</span>
+    <div>{{ text }}</div>
   </a>
 </template>
 
@@ -29,8 +29,15 @@ defineProps({
 @use '@helpers' as *;
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--color-orange);
+  font-size: 20px;
+  font-weight: 500;
+
   @include hover {
-    transform: scale(0.9);
+    opacity: 0.8;
   }
 }
 </style>

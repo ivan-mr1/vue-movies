@@ -3,14 +3,17 @@ defineProps({
   title: { type: String, default: '' },
   id: { type: String, required: true },
   type: { type: String, default: 'text' },
-  modelValue: { type: [String, Number], default: '' },
 });
 
-const emit = defineEmits(['update:modelValue']);
+const model = defineModel({
+  type: [String, Number],
+  default: '',
+});
 
-const handleInput = (event) => {
-  emit('update:modelValue', event.target.value);
-};
+// Отключаем наследование на корневой div, чтобы атрибуты летели в input
+defineOptions({
+  inheritAttrs: false,
+});
 </script>
 
 <template>
@@ -21,8 +24,8 @@ const handleInput = (event) => {
     <input
       :id="id"
       :type="type"
-      :value="modelValue"
-      @input="handleInput"
+      v-bind="$attrs"
+      v-model="model"
       class="field__input"
       placeholder=" "
       autocomplete="off"
@@ -32,11 +35,11 @@ const handleInput = (event) => {
 
 <style scoped lang="scss">
 .field {
-  --field-color-label: #141216;
-  --field-color-label-active: #2e2d2f;
-  --field-color-border: #c7c7c7;
-  --field-color-active: #2e2d2f;
-  --field-color-focus-bcg: #f5f5f5;
+  --field-color-label: #ffffff;
+  --field-color-label-active: #ffffff;
+  --field-color-border: #ffffff;
+  --field-color-active: #ff9800;
+  --field-color-focus-bcg: #ffffff;
 
   position: relative;
 
@@ -60,7 +63,7 @@ const handleInput = (event) => {
     --field-search-input-icon-size: 16px;
 
     width: 100%;
-    height: 50px;
+    height: 44px;
     padding-inline: var(--field-input-padding-x);
     background-color: transparent;
     border: 1px solid var(--field-color-border);

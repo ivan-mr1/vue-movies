@@ -11,16 +11,36 @@ export const useMovieStore = defineStore('movieStore', () => {
   }
 
   const watchedMovies = computed(() => movies.value.filter((el) => el.isWatched));
+  const favoriteMovies = computed(() => movies.value.filter((el) => el.isFavorite));
   const totalCountMovies = computed(() => movies.value.length);
 
   const setActiveTab = (id) => {
     activeTab.value = id;
   };
 
+  const addMovie = (movie) => {
+    const isExist = movies.value.some((el) => el.id === movie.id);
+
+    if (!isExist) {
+      movies.value.push({
+        ...movie,
+        isWatched: false,
+        isFavorite: false,
+      });
+    }
+  };
+
   const toggleWatched = (id) => {
-    const idx = movies.value.findIndex((el) => el.id === id);
-    if (idx !== -1) {
-      movies.value[idx].isWatched = !movies.value[idx].isWatched;
+    const movie = movies.value.find((el) => el.id === id);
+    if (movie) {
+      movie.isWatched = !movie.isWatched;
+    }
+  };
+
+  const toggleFavorited = (id) => {
+    const movie = movies.value.find((el) => el.id === id);
+    if (movie) {
+      movie.isFavorite = !movie.isFavorite;
     }
   };
 
@@ -29,7 +49,7 @@ export const useMovieStore = defineStore('movieStore', () => {
   };
 
   watch(
-    () => movies.value,
+    movies,
     (state) => {
       localStorage.setItem('movies', JSON.stringify(state));
     },
@@ -40,39 +60,12 @@ export const useMovieStore = defineStore('movieStore', () => {
     movies,
     activeTab,
     watchedMovies,
+    favoriteMovies,
     totalCountMovies,
-    toggleWatched,
-    deleteMovie,
     setActiveTab,
+    addMovie,
+    toggleWatched,
+    toggleFavorited,
+    deleteMovie,
   };
 });
-
-// option api
-// export const useMovieStore = defineStore('movieStore', {
-//   state: () => ({
-//     movies: [],
-//     activeTab: 2,
-//   }),
-//   getters: {
-//     watchedMovies() {
-//       return this.movies.filter((el) => el.isWatched);
-//     },
-//     totalCountMovies() {
-//       return this.movies.length;
-//     },
-//   },
-//   actions: {
-//     setActiveTab(id) {
-//       this.activeTab = id;
-//     },
-//     toggleWatched(id) {
-//       const movie = this.movies.find((el) => el.id === id);
-//       if (movie) {
-//         movie.isWatched = !movie.isWatched;
-//       }
-//     },
-//     deleteMovie(id) {
-//       this.movies = this.movies.filter((el) => el.id !== id);
-//     },
-//   },
-// });

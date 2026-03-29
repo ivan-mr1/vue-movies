@@ -20,5 +20,5 @@ const AddMovie = () => {
 </script>
 
 <template>
-  <Button class="btn--green" @click="AddMovie">Add</Button>
+  <Button @click="AddMovie">Add to Watchlist</Button>
 </template>

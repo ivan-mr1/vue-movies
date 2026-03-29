@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useSearchStore } from '../index';
+import Field from '@/shared/ui/form/field';
 
 const searchStore = useSearchStore();
 const searchMovie = ref('');
@@ -8,19 +9,8 @@ const searchMovie = ref('');
 
 <template>
   <form @submit.prevent="searchStore.getMovies(searchMovie)">
-    <input type="text" class="search-input" placeholder="Input movie" v-model="searchMovie" />
+    <Field title="Search Movie" id="search-input" type="search" v-model="searchMovie" />
   </form>
 </template>
 
-<style lang="scss" scoped>
-@use '@helpers' as *;
-
-.search-input {
-  border: 1px solid #e7e7e7;
-  width: 100%;
-  height: 40px;
-  padding: 0 10px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-}
-</style>
+<style lang="scss" scoped></style>
