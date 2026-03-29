@@ -6,8 +6,8 @@ import './styles/main.scss';
 
 <template>
   <div class="wrapper">
+    <Header />
     <div class="container">
-      <Header />
       <main class="page">
         <RouterView />
       </main>

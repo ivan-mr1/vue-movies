@@ -27,6 +27,7 @@ defineProps({
   &__title {
     font-size: 22px;
     font-weight: 600;
+    color: var(--color-white);
     &:not(:last-child) {
       margin-bottom: 16px;
     }

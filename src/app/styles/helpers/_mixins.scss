@@ -125,4 +125,5 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: $lines;
   line-clamp: $lines;
+  text-overflow: ellipsis;
 }

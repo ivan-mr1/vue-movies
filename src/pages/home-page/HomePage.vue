@@ -24,8 +24,8 @@ const handleTabChange = (id) => {
     </div>
 
     <div v-if="movieStore.activeTab === 1">
-      <MovieList title="Watched movies" :movies="movieStore.watchedMovies" />
       <MovieList title="All movies" :movies="movieStore.movies" />
+      <MovieList title="Watched movies" :movies="movieStore.watchedMovies" />
     </div>
 
     <div class="search" v-if="movieStore.activeTab === 2">
@@ -37,8 +37,6 @@ const handleTabChange = (id) => {
 
 <style scoped lang="scss">
 .films {
-  max-width: 650px;
-  margin: 0 auto;
   &__tabs {
     display: flex;
     justify-content: center;

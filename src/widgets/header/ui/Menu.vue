@@ -1,6 +1,4 @@
 <script setup>
-import Social from '@/shared/ui/social/Social.vue';
-
 defineProps({
   list: {
     type: Array,
@@ -26,7 +24,6 @@ defineProps({
         </a>
       </li>
     </ul>
-    <Social base-class="header__soc1al visible-mobile" />
   </nav>
 </template>
 

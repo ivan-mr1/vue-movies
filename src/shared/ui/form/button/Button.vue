@@ -36,11 +36,11 @@ const isLink = computed(() => !!props.href);
   text-align: center;
   cursor: pointer;
   transition: var(--transition);
-  padding-block: rem(12);
-  padding-inline: rem(25);
-  font-weight: 600;
+  padding-block: rem(10);
+  padding-inline: rem(20);
+  font-weight: 500;
   color: var(--color-white);
-  background-color: var(--accent-color);
+  background-color: transparent;
   border: 1px solid var(--color-white);
   border-radius: var(--border-radius);
   text-decoration: none;
@@ -69,7 +69,7 @@ const isLink = computed(() => !!props.href);
   }
 
   &--delete {
-    background-color: #ff2a2a;
+    background-color: transparent;
   }
 
   &--green {

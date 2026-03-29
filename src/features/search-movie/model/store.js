@@ -25,7 +25,6 @@ export const useSearchStore = defineStore('searchStore', () => {
   const addToUserMovies = (object) => {
     const movieStore = useMovieStore();
     movieStore.movies.push({ ...object, isWatched: false });
-    // Логика вкладок вынесена в UI для соблюдения принципов FSD
   };
 
   return {
