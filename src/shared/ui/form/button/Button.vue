@@ -73,7 +73,7 @@ const isLink = computed(() => !!props.href);
   }
 
   &--green {
-    background-color: #25b444;
+    border: 1px solid #25b444;
   }
 }
 </style>
