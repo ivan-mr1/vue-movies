@@ -5,14 +5,6 @@ defineProps({
     default: false,
   },
 });
-
-import { useMovieStore } from '@/entities/movie-card';
-
-const movieStore = useMovieStore();
-
-const handleTabChange = (id) => {
-  movieStore.setActiveTab(id);
-};
 </script>
 
 <template>
@@ -40,11 +32,7 @@ const handleTabChange = (id) => {
       </li>
 
       <li class="menu__item">
-        <RouterLink
-          :to="{ name: 'Search' }"
-          class="menu__link hover-link"
-          @click="handleTabChange(2)"
-        >
+        <RouterLink :to="{ name: 'Search' }" class="menu__link hover-link">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -87,11 +75,7 @@ const handleTabChange = (id) => {
       </li>
 
       <li class="menu__item">
-        <RouterLink
-          :to="{ name: 'Watched' }"
-          class="menu__link hover-link"
-          @click="handleTabChange(1)"
-        >
+        <RouterLink :to="{ name: 'Watched' }" class="menu__link hover-link">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"

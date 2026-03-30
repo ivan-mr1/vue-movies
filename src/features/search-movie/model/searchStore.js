@@ -6,10 +6,11 @@ export const useSearchStore = defineStore('searchStore', () => {
   const loader = ref(false);
   const movies = ref([]);
   const searchMovieText = ref('');
+  const error = ref(null); // ref для UI
 
   const getMovies = async (search) => {
     searchMovieText.value = search;
-
+    error.value = null;
     if (!search || !search.trim()) {
       movies.value = [];
       return;
@@ -19,8 +20,9 @@ export const useSearchStore = defineStore('searchStore', () => {
     try {
       const response = await fetchSearchMovie(search);
       movies.value = response.data?.results || [];
-    } catch (error) {
-      console.error('[SearchStore] Error fetching movies:', error);
+    } catch (err) {
+      console.error('[SearchStore] Error fetching movies:', err);
+      error.value = 'Failed to load movies';
       movies.value = [];
     } finally {
       loader.value = false;
@@ -31,6 +33,7 @@ export const useSearchStore = defineStore('searchStore', () => {
     loader,
     movies,
     searchMovieText,
+    error,
     getMovies,
   };
 });

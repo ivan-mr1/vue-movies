@@ -13,7 +13,7 @@ defineProps({
   <div class="movie-list">
     <h2 class="movie-list__title">{{ title }}: {{ movies.length }} films</h2>
 
-    <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" :is-search="false">
+    <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie">
       <template #actions>
         <DeleteMovie :movie-id="movie.id" />
         <ToggleWatched :movie="movie" />
