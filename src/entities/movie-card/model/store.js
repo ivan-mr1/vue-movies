@@ -3,7 +3,6 @@ import { ref, computed, watch } from 'vue';
 
 export const useMovieStore = defineStore('movieStore', () => {
   const movies = ref([]);
-  const activeTab = ref(2);
 
   const moviesInLocalStorage = localStorage.getItem('movies');
   if (moviesInLocalStorage) {
@@ -13,10 +12,6 @@ export const useMovieStore = defineStore('movieStore', () => {
   const watchedMovies = computed(() => movies.value.filter((el) => el.isWatched));
   const favoriteMovies = computed(() => movies.value.filter((el) => el.isFavorite));
   const totalCountMovies = computed(() => movies.value.length);
-
-  const setActiveTab = (id) => {
-    activeTab.value = id;
-  };
 
   const addMovie = (movie) => {
     const isExist = movies.value.some((el) => el.id === movie.id);
@@ -58,11 +53,9 @@ export const useMovieStore = defineStore('movieStore', () => {
 
   return {
     movies,
-    activeTab,
     watchedMovies,
     favoriteMovies,
     totalCountMovies,
-    setActiveTab,
     addMovie,
     toggleWatched,
     toggleFavorited,

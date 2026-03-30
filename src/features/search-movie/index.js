@@ -1,2 +1,2 @@
 export { default } from './ui/SearchMovie.vue';
-export * from './model/store';
+export * from './model/searchStore';

@@ -1,5 +1,4 @@
 <script setup>
-import { useSearchStore } from '@/features/search-movie';
 import { useMovieStore } from '@/entities/movie-card';
 import Button from '@/shared/ui/form/button';
 
@@ -10,12 +9,10 @@ const props = defineProps({
   },
 });
 
-const searchStore = useSearchStore();
 const movieStore = useMovieStore();
 
 const AddMovie = () => {
-  searchStore.addToUserMovies(props.movie);
-  movieStore.setActiveTab(1);
+  movieStore.addMovie(props.movie);
 };
 </script>
 

@@ -1,13 +1,15 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { useMovieStore } from '@/entities/movie-card';
-import { searchMovie } from '@/shared/api/data-api';
+import { searchMovie as fetchSearchMovie } from '@/shared/api/data-api';
 
 export const useSearchStore = defineStore('searchStore', () => {
   const loader = ref(false);
   const movies = ref([]);
+  const searchMovieText = ref('');
 
   const getMovies = async (search) => {
+    searchMovieText.value = search;
+
     if (!search || !search.trim()) {
       movies.value = [];
       return;
@@ -15,7 +17,7 @@ export const useSearchStore = defineStore('searchStore', () => {
 
     loader.value = true;
     try {
-      const response = await searchMovie(search);
+      const response = await fetchSearchMovie(search);
       movies.value = response.data?.results || [];
     } catch (error) {
       console.error('[SearchStore] Error fetching movies:', error);
@@ -25,15 +27,10 @@ export const useSearchStore = defineStore('searchStore', () => {
     }
   };
 
-  const addToUserMovies = (movie) => {
-    const movieStore = useMovieStore();
-    movieStore.addMovie(movie);
-  };
-
   return {
     loader,
     movies,
+    searchMovieText,
     getMovies,
-    addToUserMovies,
   };
 });
