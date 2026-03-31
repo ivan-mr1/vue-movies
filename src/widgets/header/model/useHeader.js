@@ -1,5 +1,5 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { bodyLock, bodyUnlock } from '@/shared/utils/bodyLock';
+import { bodyLock, bodyUnlock } from '@/shared/lib/body-lock/bodyLock';
 
 export function useHeader() {
   const isMenuOpen = ref(false);
