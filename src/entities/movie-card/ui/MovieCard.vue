@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { ImdbIcon } from '@/shared/ui/icons';
+import { formatDate } from '@/shared/lib';
 import { TMDB_IMAGE_BASE, POSTER_SIZE } from '../config';
 
 const props = defineProps({
@@ -42,7 +43,7 @@ const rating = computed(() => {
       </div>
 
       <time v-if="movie.release_date" class="movie__date" :datetime="movie.release_date">
-        Release: {{ movie.release_date }}
+        Release: {{ formatDate(movie.release_date) }}
       </time>
 
       <div v-if="movie.overview" class="movie__overview">
