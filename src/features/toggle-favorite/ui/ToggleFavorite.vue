@@ -11,13 +11,13 @@ const props = defineProps({
 
 const movieStore = useMovieStore();
 
-const toggleStatusFav = () => {
-  movieStore.toggleFavorited(props.movie.id);
+const handleToggleFavorite = () => {
+  movieStore.toggleFavorite(props.movie.id);
 };
 </script>
 
 <template>
-  <Button class="btn--favorite" @click="toggleStatusFav">
+  <Button @click="handleToggleFavorite">
     <span>{{ movie.isFavorite ? 'In Favorites' : 'Add to Favorite' }}</span>
   </Button>
 </template>

@@ -60,20 +60,5 @@ const isLink = computed(() => !!props.href);
     cursor: default;
     pointer-events: none;
   }
-
-  &--watched {
-    &__icon {
-      width: 15px;
-      margin-left: 10px;
-    }
-  }
-
-  &--delete {
-    background-color: transparent;
-  }
-
-  &--green {
-    border: 1px solid #25b444;
-  }
 }
 </style>

@@ -25,7 +25,7 @@ export const useMovieStore = defineStore('entities:movie', () => {
   };
 
   const toggleWatched = (id) => toggleArrayItemProperty(movies.value, id, 'isWatched');
-  const toggleFavorited = (id) => toggleArrayItemProperty(movies.value, id, 'isFavorite');
+  const toggleFavorite = (id) => toggleArrayItemProperty(movies.value, id, 'isFavorite');
 
   const deleteMovie = (id) => {
     movies.value = movies.value.filter((el) => el.id !== id);
@@ -46,7 +46,7 @@ export const useMovieStore = defineStore('entities:movie', () => {
     totalCountMovies,
     addMovie,
     toggleWatched,
-    toggleFavorited,
+    toggleFavorite,
     deleteMovie,
   };
 });
