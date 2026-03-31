@@ -11,15 +11,14 @@ const props = defineProps({
 
 const movieStore = useMovieStore();
 
-const toggleStatus = () => {
+const handleToggleWatched = () => {
   movieStore.toggleWatched(props.movie.id);
 };
 </script>
 
 <template>
-  <Button class="btn--watched" @click="toggleStatus">
-    <span v-if="!movie.isWatched">Watched</span>
-    <span v-else>Unwatched</span>
+  <Button @click="handleToggleWatched">
+    <span>{{ movie.isWatched ? 'Unwatched' : 'Watched' }}</span>
   </Button>
 </template>
 

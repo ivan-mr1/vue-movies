@@ -5,14 +5,13 @@ defineProps({
   width: { type: Number, default: 50 },
   height: { type: Number, default: 50 },
   text: { type: String, default: 'Logo' },
-  href: { type: String, default: '/' },
   lazy: { type: Boolean, default: false },
   ariaLabel: { type: String, default: 'Home' },
 });
 </script>
 
 <template>
-  <a :href="href" class="logo" :aria-label="ariaLabel" :title="ariaLabel">
+  <div class="logo" :aria-label="ariaLabel" :title="ariaLabel">
     <img
       v-if="imageUrl"
       :src="imageUrl"
@@ -22,7 +21,7 @@ defineProps({
       :loading="lazy ? 'lazy' : 'eager'"
     />
     <div>{{ text }}</div>
-  </a>
+  </div>
 </template>
 
 <style scoped lang="scss">

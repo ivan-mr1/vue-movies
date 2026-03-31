@@ -1,12 +1,12 @@
 <script setup>
 import Logo from '@/shared/ui/logo';
-import Menu from './ui/menu/ui/Menu.vue';
+import Menu from './Menu.vue';
 </script>
 
 <template>
   <header class="header">
     <div class="header__container">
-      <RouterLink :to="{ name: 'Home' }" class="menu__link hover-link">
+      <RouterLink :to="{ name: 'Home' }" class="menu__link">
         <Logo
           class="header__logo"
           image-url="/img/logo.svg"

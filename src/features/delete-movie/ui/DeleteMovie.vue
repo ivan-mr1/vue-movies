@@ -11,11 +11,11 @@ const props = defineProps({
 
 const movieStore = useMovieStore();
 
-const removeMovie = () => {
+const handleDeleteMovie = () => {
   movieStore.deleteMovie(props.movieId);
 };
 </script>
 
 <template>
-  <Button class="btn--delete" @click="removeMovie">Delete</Button>
+  <Button @click="handleDeleteMovie">Delete</Button>
 </template>
