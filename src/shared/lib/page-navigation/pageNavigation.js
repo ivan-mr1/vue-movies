@@ -1,6 +1,6 @@
 import { onMounted, onUnmounted } from 'vue';
 
-export function usePageNavigation() {
+export function pageNavigation() {
   const handleNavigation = (e) => {
     const menuLink = e.target.closest('[data-goto]');
     if (!menuLink) return;

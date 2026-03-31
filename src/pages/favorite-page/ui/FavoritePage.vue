@@ -6,7 +6,16 @@ const movieStore = useMovieStore();
 </script>
 
 <template>
-  <MovieList title="Favorite movies" :movies="movieStore.favoriteMovies" />
+  <div class="favorites-page">
+    <MovieList
+      v-if="movieStore.favoriteMovies.length > 0"
+      title="Favorite movies"
+      :movies="movieStore.favoriteMovies"
+    />
+    <div v-else class="empty-message">
+      <p>Your favorite list is empty. Go to search and add some gems!</p>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="scss"></style>

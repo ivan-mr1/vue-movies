@@ -5,7 +5,16 @@ const movieStore = useMovieStore();
 </script>
 
 <template>
-  <MovieList title="Watched movies" :movies="movieStore.watchedMovies" />
+  <div class="watched-page">
+    <MovieList
+      v-if="movieStore.watchedMovies.length > 0"
+      title="Watched movies"
+      :movies="movieStore.watchedMovies"
+    />
+    <div v-else class="empty-message">
+      <p>Your watched list is empty.</p>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="scss"></style>
