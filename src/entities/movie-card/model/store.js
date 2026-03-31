@@ -1,22 +1,13 @@
 import { defineStore } from 'pinia';
 import { ref, computed, watch } from 'vue';
+import { browserStorage } from '@/shared/lib';
 
-export const useMovieStore = defineStore('movieStore', () => {
-  const movies = ref([]);
-  const activeTab = ref(2);
-
-  const moviesInLocalStorage = localStorage.getItem('movies');
-  if (moviesInLocalStorage) {
-    movies.value = JSON.parse(moviesInLocalStorage);
-  }
+export const useMovieStore = defineStore('entities:movie', () => {
+  const movies = ref(browserStorage.get('movies', []));
 
   const watchedMovies = computed(() => movies.value.filter((el) => el.isWatched));
   const favoriteMovies = computed(() => movies.value.filter((el) => el.isFavorite));
   const totalCountMovies = computed(() => movies.value.length);
-
-  const setActiveTab = (id) => {
-    activeTab.value = id;
-  };
 
   const addMovie = (movie) => {
     const isExist = movies.value.some((el) => el.id === movie.id);
@@ -51,18 +42,16 @@ export const useMovieStore = defineStore('movieStore', () => {
   watch(
     movies,
     (state) => {
-      localStorage.setItem('movies', JSON.stringify(state));
+      browserStorage.set('movies', state);
     },
     { deep: true },
   );
 
   return {
     movies,
-    activeTab,
     watchedMovies,
     favoriteMovies,
     totalCountMovies,
-    setActiveTab,
     addMovie,
     toggleWatched,
     toggleFavorited,

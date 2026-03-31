@@ -43,11 +43,14 @@ defineOptions({
 
   position: relative;
 
-  &:has(.field__input:not(:placeholder-shown)) .field__label {
-    // обращаемся к label только когда плейсхолдер не должен отображаться
-    color: var(--field-color-label-active);
-    scale: 0.7;
-    translate: -30px -45px;
+  // обращаемся к label только когда плейсхолдер не должен отображаться
+  &:has(.field__input:focus),
+  &:has(.field__input:not(:placeholder-shown)) {
+    .field__label {
+      color: var(--field-color-label-active);
+      scale: 0.7;
+      translate: -30px -45px;
+    }
   }
 
   &__label {
