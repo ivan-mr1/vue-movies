@@ -1,19 +1,30 @@
 <script setup>
+import { computed } from 'vue';
 import { ImdbIcon } from '@/shared/ui/icons';
+import { TMDB_IMAGE_BASE, POSTER_SIZE } from '../config';
 
-defineProps({
+const props = defineProps({
   movie: {
     type: Object,
     required: true,
   },
+});
+
+const posterUrl = computed(() => {
+  if (!props.movie.poster_path) return null;
+  return `${TMDB_IMAGE_BASE}${POSTER_SIZE}${props.movie.poster_path}`;
+});
+
+const rating = computed(() => {
+  return props.movie.vote_average ? props.movie.vote_average.toFixed(1) : 'N/A';
 });
 </script>
 
 <template>
   <article class="movie">
     <img
-      v-if="movie.poster_path"
-      :src="`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`"
+      v-if="posterUrl"
+      :src="posterUrl"
       :alt="movie.original_title"
       loading="lazy"
       width="150"
@@ -27,14 +38,16 @@ defineProps({
 
       <div class="movie__rating">
         <ImdbIcon />
-        {{ movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A' }} ⭐
+        {{ rating }} ⭐
       </div>
 
       <time v-if="movie.release_date" class="movie__date" :datetime="movie.release_date">
         Release: {{ movie.release_date }}
       </time>
 
-      <div class="movie__overview">{{ movie.overview }}</div>
+      <div v-if="movie.overview" class="movie__overview">
+        {{ movie.overview }}
+      </div>
 
       <div v-if="$slots.actions" class="movie__buttons">
         <slot name="actions" />
