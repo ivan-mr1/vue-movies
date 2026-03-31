@@ -1,39 +1,31 @@
 import { defineStore } from 'pinia';
 import { ref, computed, watch } from 'vue';
-import { browserStorage } from '@/shared/lib';
+import { browserStorage, toggleArrayItemProperty } from '@/shared/lib';
 
 export const useMovieStore = defineStore('entities:movie', () => {
-  const movies = ref(browserStorage.get('movies', []));
+  const initialData = browserStorage.get('movies', []);
+  const movies = ref(Array.isArray(initialData) ? initialData : []);
 
   const watchedMovies = computed(() => movies.value.filter((el) => el.isWatched));
   const favoriteMovies = computed(() => movies.value.filter((el) => el.isFavorite));
   const totalCountMovies = computed(() => movies.value.length);
 
-  const addMovie = (movie) => {
-    const isExist = movies.value.some((el) => el.id === movie.id);
+  const addMovie = (newMovie) => {
+    if (!newMovie?.id) return;
 
-    if (!isExist) {
+    const exists = movies.value.some((el) => el.id === newMovie.id);
+
+    if (!exists) {
       movies.value.push({
-        ...movie,
+        ...newMovie,
         isWatched: false,
         isFavorite: false,
       });
     }
   };
 
-  const toggleWatched = (id) => {
-    const movie = movies.value.find((el) => el.id === id);
-    if (movie) {
-      movie.isWatched = !movie.isWatched;
-    }
-  };
-
-  const toggleFavorited = (id) => {
-    const movie = movies.value.find((el) => el.id === id);
-    if (movie) {
-      movie.isFavorite = !movie.isFavorite;
-    }
-  };
+  const toggleWatched = (id) => toggleArrayItemProperty(movies.value, id, 'isWatched');
+  const toggleFavorited = (id) => toggleArrayItemProperty(movies.value, id, 'isFavorite');
 
   const deleteMovie = (id) => {
     movies.value = movies.value.filter((el) => el.id !== id);
@@ -41,8 +33,8 @@ export const useMovieStore = defineStore('entities:movie', () => {
 
   watch(
     movies,
-    (state) => {
-      browserStorage.set('movies', state);
+    (currentMovies) => {
+      browserStorage.set('movies', currentMovies);
     },
     { deep: true },
   );
