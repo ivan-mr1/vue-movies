@@ -17,8 +17,7 @@ const toggleStatusFav = () => {
 </script>
 
 <template>
-  <Button class="btn--watched" @click="toggleStatusFav">
-    <span v-if="!movie.isWatched">Favorite</span>
-    <span v-else>Unfavorite</span>
+  <Button class="btn--favorite" @click="toggleStatusFav">
+    <span>{{ movie.isFavorite ? 'In Favorites' : 'Add to Favorite' }}</span>
   </Button>
 </template>

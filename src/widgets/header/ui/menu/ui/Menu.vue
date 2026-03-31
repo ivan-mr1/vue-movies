@@ -1,97 +1,45 @@
 <script setup>
+import { useMovieStore } from '@/entities/movie-card';
+import { HomeIcon, SearchIcon, FavoriteIcon, EyeIcon } from '@/shared/ui/icons';
+
 defineProps({
   isOpen: {
     type: Boolean,
     default: false,
   },
 });
+
+const movieStore = useMovieStore();
 </script>
 
 <template>
   <nav class="header__menu menu" :class="{ 'is-active': isOpen }" data-header-menu>
     <ul class="menu__list">
       <li class="menu__item">
-        <RouterLink :to="{ name: 'Home' }" class="menu__link hover-link">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="menu__icon"
-          >
-            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-            <polyline points="9 22 9 12 15 12 15 22" />
-          </svg>
-          <span>Home</span>
+        <RouterLink :to="{ name: 'Home' }" class="menu__link">
+          <HomeIcon />
+          <span>All Movies ({{ movieStore.totalCountMovies }})</span>
         </RouterLink>
       </li>
 
       <li class="menu__item">
-        <RouterLink :to="{ name: 'Search' }" class="menu__link hover-link">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="menu__icon"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.3-4.3" />
-          </svg>
+        <RouterLink :to="{ name: 'Search' }" class="menu__link">
+          <SearchIcon />
           <span>Search</span>
         </RouterLink>
       </li>
 
       <li class="menu__item">
-        <RouterLink :to="{ name: 'Favorite' }" class="menu__link hover-link">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="menu__icon"
-          >
-            <path
-              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-            />
-          </svg>
-          <span>Favorites</span>
+        <RouterLink :to="{ name: 'Favorite' }" class="menu__link">
+          <FavoriteIcon />
+          <span>Favorites ({{ movieStore.favoriteMovies.length }})</span>
         </RouterLink>
       </li>
 
       <li class="menu__item">
-        <RouterLink :to="{ name: 'Watched' }" class="menu__link hover-link">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="menu__icon"
-          >
-            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-            <circle cx="12" cy="12" r="3" />
-          </svg>
-          <span>Watched</span>
+        <RouterLink :to="{ name: 'Watched' }" class="menu__link">
+          <EyeIcon />
+          <span>Watched ({{ movieStore.watchedMovies.length }})</span>
         </RouterLink>
       </li>
     </ul>

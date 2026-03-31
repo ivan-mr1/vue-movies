@@ -13,9 +13,8 @@ const searchStore = useSearchStore();
   </div>
   <div v-else-if="searchStore.movies.length > 0">
     <MovieCard v-for="movie of searchStore.movies" :key="movie.id" :movie="movie">
-      <template #actions>
-        <AddMovie :movie="movie" /> </template
-    ></MovieCard>
+      <template #actions> <AddMovie :movie="movie" /> </template>
+    </MovieCard>
   </div>
   <div v-else-if="searchStore.searchMovieText && !searchStore.loader" class="empty-state">
     <p>Nothing found for the search query "{{ searchStore.searchMovieText }}"</p>
