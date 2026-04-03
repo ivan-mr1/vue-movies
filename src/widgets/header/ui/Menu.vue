@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue';
 import { useMovieStore } from '@/entities/movie-card';
 import { HomeIcon, SearchIcon, FavoriteIcon, EyeIcon } from '@/shared/ui/icons';
 
@@ -10,36 +11,30 @@ defineProps({
 });
 
 const movieStore = useMovieStore();
+
+const navigation = computed(() => [
+  { to: 'Home', label: 'All Movies', count: movieStore.totalCountMovies, icon: HomeIcon },
+  { to: 'Search', label: 'Search', count: null, icon: SearchIcon },
+  {
+    to: 'Favorite',
+    label: 'Favorites',
+    count: movieStore.favoriteMovies.length,
+    icon: FavoriteIcon,
+  },
+  { to: 'Watched', label: 'Watched', count: movieStore.watchedMovies.length, icon: EyeIcon },
+]);
 </script>
 
 <template>
   <nav class="header__menu menu" :class="{ 'is-active': isOpen }" data-header-menu>
     <ul class="menu__list">
-      <li class="menu__item">
-        <RouterLink :to="{ name: 'Home' }" class="menu__link">
-          <HomeIcon />
-          <span>All Movies ({{ movieStore.totalCountMovies }})</span>
-        </RouterLink>
-      </li>
-
-      <li class="menu__item">
-        <RouterLink :to="{ name: 'Search' }" class="menu__link">
-          <SearchIcon />
-          <span>Search</span>
-        </RouterLink>
-      </li>
-
-      <li class="menu__item">
-        <RouterLink :to="{ name: 'Favorite' }" class="menu__link">
-          <FavoriteIcon />
-          <span>Favorites ({{ movieStore.favoriteMovies.length }})</span>
-        </RouterLink>
-      </li>
-
-      <li class="menu__item">
-        <RouterLink :to="{ name: 'Watched' }" class="menu__link">
-          <EyeIcon />
-          <span>Watched ({{ movieStore.watchedMovies.length }})</span>
+      <li v-for="item in navigation" :key="item.to" class="menu__item">
+        <RouterLink :to="{ name: item.to }" class="menu__link">
+          <component :is="item.icon" class="menu__icon" />
+          <span>
+            {{ item.label }}
+            <template v-if="item.count !== null">({{ item.count }})</template>
+          </span>
         </RouterLink>
       </li>
     </ul>
@@ -47,8 +42,6 @@ const movieStore = useMovieStore();
 </template>
 
 <style scoped lang="scss">
-@use '@helpers' as *;
-
 .menu {
   --menu-link: var(--color-light);
   --menu-background: #1f2a32;
@@ -76,10 +69,9 @@ const movieStore = useMovieStore();
       top: 0;
       left: -100%;
       width: 100%;
+      height: var(--header-height);
       background-color: var(--menu-background-before);
       transition: left 0.3s;
-
-      @include adaptive-clamp('height', 80, 60);
     }
 
     &.is-active {

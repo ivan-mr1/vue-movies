@@ -5,7 +5,7 @@ const movieStore = useMovieStore();
 </script>
 
 <template>
-  <div class="watched-page">
+  <div class="page">
     <MovieList
       v-if="movieStore.watchedMovies.length > 0"
       title="Watched movies"

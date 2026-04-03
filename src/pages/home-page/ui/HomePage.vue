@@ -6,7 +6,7 @@ const movieStore = useMovieStore();
 </script>
 
 <template>
-  <div class="home-page">
+  <div class="page">
     <MovieList v-if="movieStore.movies.length > 0" title="All movies" :movies="movieStore.movies" />
     <div v-else class="empty-message">
       <p>Your movies list is empty.</p>

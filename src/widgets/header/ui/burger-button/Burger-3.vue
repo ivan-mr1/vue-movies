@@ -17,6 +17,7 @@ const labelText = computed(() => (props.isActive ? 'Close menu' : 'Open menu'));
 
 <template>
   <button
+    data-header-burger-btn
     v-bind="$attrs"
     type="button"
     class="header__burger-button burger-button"

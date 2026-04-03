@@ -6,7 +6,7 @@ const movieStore = useMovieStore();
 </script>
 
 <template>
-  <div class="favorites-page">
+  <div class="page">
     <MovieList
       v-if="movieStore.favoriteMovies.length > 0"
       title="Favorite movies"
