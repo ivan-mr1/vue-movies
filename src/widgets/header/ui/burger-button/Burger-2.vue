@@ -35,84 +35,79 @@ const labelText = computed(() => (props.isActive ? 'Close menu' : 'Open menu'));
 
 <style scoped lang="scss">
 .burger-button {
-  --burger-button-color-line: var(--color-white);
-  --burger-button-color-bcg: #ffa501;
-  --burger-button-color-hover: #ffa501;
-  --burger-button-color-open: #ffa501;
+  --burger-button-color-line: #ffffff;
+  --burger-button-color-bcg: #ff4646;
+  --burger-button-color-hover: #b34545;
+  --burger-button-color-open: #6928a2;
 
   display: none;
 
   @media (max-width: em(767.98)) {
     position: relative;
     z-index: 15;
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 3rem;
-    height: 3rem;
-    background-color: transparent;
+    width: 48px;
+    height: 48px;
     border: 1px solid var(--burger-button-color-line);
-
-    // background-color: var(--burger-button-color-bcg);
-    border-radius: 0.5rem;
-    transition: background-color 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border-radius: 6px;
+    cursor: pointer;
+    transition-duration: var(--transition-duration);
 
     @include hover {
       background-color: var(--burger-button-color-hover);
     }
 
     &__inner {
-      flex: 0 0 1.75rem;
-      display: flex;
+      flex-shrink: 0;
+      flex-basis: 24px;
+      display: inline-flex;
       flex-direction: column;
       justify-content: space-between;
-      align-items: flex-start;
-      height: 1.5rem;
+      height: 22px;
     }
 
     &__line {
       width: 100%;
-      height: 0.2188rem;
+      height: 2px;
       background-color: var(--burger-button-color-line);
-      border-radius: 0.5rem;
-      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      transform-origin: center;
+      border-radius: 8px;
+      transition-duration: var(--transition-duration);
 
       &:first-child {
-        width: 60%;
+        align-self: center;
+        width: 70%;
       }
 
-      &:nth-child(2) {
-        width: 80%;
+      // &:nth-child(2) {
+      // }
+
+      &:last-child {
+        align-self: center;
+        width: 70%;
       }
     }
 
     &.is-active {
-      // background-color: var(--burger-button-color-open);
-      transition-duration: 0.5s;
-
-      .burger-button__inner {
-        transition-duration: 0.5s;
-        transform: rotate(180deg);
-      }
+      border: 1px solid var(--burger-button-color-open);
 
       .burger-button__line {
+        background-color: var(--burger-button-color-open);
+
         &:nth-child(2) {
           opacity: 0;
-          transition-duration: 0.3s;
           transform: scaleX(0);
         }
 
         &:first-child {
           width: 100%;
-          transition-duration: 0.5s;
-          transform: translateY(0.625rem) rotate(45deg);
+          transform: translateY(rem(9.92)) rotate(45deg);
         }
 
         &:last-child {
           width: 100%;
-          transition-duration: 0.5s;
-          transform: translateY(-0.6687rem) rotate(-45deg);
+          transform: translateY(rem(-9.28)) rotate(-45deg);
         }
       }
     }
