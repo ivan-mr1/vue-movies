@@ -4,7 +4,7 @@ import SearchResults from '@/widgets/search';
 </script>
 
 <template>
-  <div class="search-page">
+  <div class="search-page page">
     <SearchMovie />
     <SearchResults />
   </div>

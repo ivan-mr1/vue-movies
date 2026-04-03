@@ -1,80 +1,99 @@
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
 import { bodyLock, bodyUnlock } from '@/shared/lib/body-lock/bodyLock';
 
-export function useHeader() {
+export function useHeaderLogic(props) {
   const isMenuOpen = ref(false);
   const isScrolled = ref(false);
   const isHidden = ref(false);
   const headerRef = ref(null);
 
-  let lastScrollY = 0;
+  let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
   let ticking = false;
+  let resizeObserver = null;
 
-  const toggleMenu = () => {
-    isMenuOpen.value = !isMenuOpen.value;
+  const updateHeights = () => {
+    if (!headerRef.value) return;
 
-    if (isMenuOpen.value) {
-      bodyLock();
-      isHidden.value = false;
-      document.addEventListener('keydown', onEscapePress);
-    } else {
-      bodyUnlock();
-      document.removeEventListener('keydown', onEscapePress);
-    }
+    const height = headerRef.value.offsetHeight;
+    const isCurrentlyHidden = headerRef.value.classList.contains('is-hidden-translate');
+
+    document.documentElement.style.setProperty('--header-height', `${height}px`);
+    document.documentElement.style.setProperty(
+      '--header-offset',
+      isCurrentlyHidden ? '0px' : `${height}px`,
+    );
   };
 
-  const closeMenu = () => {
-    isMenuOpen.value = false;
-    bodyUnlock();
-    document.removeEventListener('keydown', onEscapePress);
+  const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value);
+  const closeMenu = () => (isMenuOpen.value = false);
+
+  const onMenuLinkClick = (e) => {
+    if (e.target.closest('a')) closeMenu();
+  };
+
+  const processScroll = () => {
+    const currentScrollY = Math.max(0, window.scrollY);
+    isScrolled.value = currentScrollY > 0;
+
+    if (props.isHiddenHeader && !isMenuOpen.value) {
+      const isScrollingDown = currentScrollY > lastScrollY;
+      const headerHeight = headerRef.value?.offsetHeight || 0;
+      const shouldHide = isScrollingDown && currentScrollY > headerHeight;
+
+      if (isHidden.value !== shouldHide) {
+        isHidden.value = shouldHide;
+        nextTick(updateHeights);
+      }
+    }
+    lastScrollY = currentScrollY;
+  };
+
+  const handleScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(() => {
+      processScroll();
+      ticking = false;
+    });
   };
 
   const onEscapePress = (e) => {
     if (e.key === 'Escape') closeMenu();
   };
 
-  const handleScroll = () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        const currentScrollY = window.scrollY;
-        const headerHeight = headerRef.value?.offsetHeight || 0;
-
-        const isScrollingDown = currentScrollY > lastScrollY;
-        const isScrolledPastHeader = currentScrollY > headerHeight;
-
-        isScrolled.value = currentScrollY > 0;
-        isHidden.value = !isMenuOpen.value && isScrolledPastHeader && isScrollingDown;
-
-        lastScrollY = currentScrollY;
-        ticking = false;
-      });
-      ticking = true;
+  watch(isMenuOpen, (isOpen) => {
+    isOpen ? bodyLock() : bodyUnlock();
+    if (isOpen) {
+      isHidden.value = false;
+      nextTick(updateHeights);
+      document.addEventListener('keydown', onEscapePress);
+    } else {
+      document.removeEventListener('keydown', onEscapePress);
     }
-  };
-
-  const setHeaderHeight = () => {
-    const height = headerRef.value?.offsetHeight || 0;
-    document.documentElement.style.setProperty('--header-height', `${height}px`);
-  };
+  });
 
   onMounted(() => {
+    updateHeights();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', setHeaderHeight);
-    setHeaderHeight();
+    resizeObserver = new ResizeObserver(() => updateHeights());
+    if (headerRef.value) resizeObserver.observe(headerRef.value);
   });
 
-  onBeforeUnmount(() => {
+  onUnmounted(() => {
     window.removeEventListener('scroll', handleScroll);
-    window.removeEventListener('resize', setHeaderHeight);
     document.removeEventListener('keydown', onEscapePress);
+    if (resizeObserver) resizeObserver.disconnect();
+    bodyUnlock();
   });
 
+  // Возвращаем только то, что нужно шаблону
   return {
+    headerRef,
     isMenuOpen,
     isScrolled,
     isHidden,
-    headerRef,
     toggleMenu,
     closeMenu,
+    onMenuLinkClick,
   };
 }

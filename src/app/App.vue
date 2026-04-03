@@ -2,6 +2,7 @@
 import { RouterView } from 'vue-router';
 import Header from '@/widgets/header';
 import './styles/main.scss';
+import ScrollUpButton from '@/shared/ui/ScrollUpButton';
 </script>
 
 <template>
@@ -16,5 +17,6 @@ import './styles/main.scss';
         </RouterView>
       </main>
     </div>
+    <ScrollUpButton />
   </div>
 </template>
