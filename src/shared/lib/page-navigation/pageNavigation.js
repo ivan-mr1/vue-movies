@@ -1,18 +1,16 @@
-import { onMounted, onUnmounted } from 'vue';
-
 export function pageNavigation() {
-  const handleNavigation = (e) => {
+  document.addEventListener('click', (e) => {
     const menuLink = e.target.closest('[data-goto]');
-    if (!menuLink) return;
+    if (!menuLink) {
+      return;
+    }
 
-    const selector = menuLink.dataset.goto;
-    const targetBlock = document.querySelector(selector);
-
+    const targetBlock = document.querySelector(menuLink.dataset.goto);
     if (targetBlock) {
       e.preventDefault();
 
-      const html = document.documentElement;
       const targetPosition = targetBlock.getBoundingClientRect().top;
+      const html = document.documentElement;
 
       if (targetPosition > 0) {
         html.classList.add('is-scrolling-down');
@@ -36,13 +34,5 @@ export function pageNavigation() {
         setTimeout(onScrollEnd, 1000);
       }
     }
-  };
-
-  onMounted(() => {
-    document.addEventListener('click', handleNavigation);
-  });
-
-  onUnmounted(() => {
-    document.removeEventListener('click', handleNavigation);
   });
 }

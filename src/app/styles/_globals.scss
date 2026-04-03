@@ -28,7 +28,7 @@ body {
 }
 
 .page {
-  padding-top: 120px;
+  padding-top: var(--header-height);
 }
 
 a,

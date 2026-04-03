@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { searchMovie as fetchSearchMovie } from '@/shared/api/data-api';
 
-export const useSearchStore = defineStore('searchStore', () => {
+export const useSearchStore = defineStore('features:search', () => {
   const loader = ref(false);
   const movies = ref([]);
   const searchMovieText = ref('');

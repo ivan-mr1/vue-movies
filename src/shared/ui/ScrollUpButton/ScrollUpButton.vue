@@ -71,9 +71,9 @@ onUnmounted(() => {
   z-index: 100;
   right: calc(2rem + var(--scrollbar-width, 0px));
   bottom: 2rem;
-  width: 48px;
-  height: 48px;
-  background-color: var(--color-scroll-up-bcg);
+  width: 44px;
+  height: 44px;
+  // background-color: var(--color-scroll-up-bcg);
   border-radius: 50%;
   box-shadow: inset 0 0 0 var(--progress-width) var(--color-scroll-up-progress);
   border: none;

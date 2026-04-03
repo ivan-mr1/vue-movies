@@ -8,6 +8,9 @@
   --z-index-popup: 150;
   --z-body-after: 149;
 
+  --header-height: #{rem(100)}; // всегда равна высоте хедера
+  --header-offset: #{rem(100)}; // видимая часть хедера
+
   --font-family-base: 'Roboto', sans-serif;
   --font-family: 'Roboto', sans-serif;
   --second-family: 'Allura', sans-serif;

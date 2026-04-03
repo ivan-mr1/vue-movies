@@ -60,7 +60,7 @@ const navigation = computed(() => [
     height: 100%;
     padding: rem(100) rem(15) rem(30);
     background-color: var(--menu-background);
-    transition: left 0.3s;
+    transition: left var(--transition-duration);
 
     &::before {
       content: '';
@@ -71,7 +71,7 @@ const navigation = computed(() => [
       width: 100%;
       height: var(--header-height);
       background-color: var(--menu-background-before);
-      transition: left 0.3s;
+      transition: left var(--transition-duration);
     }
 
     &.is-active {
