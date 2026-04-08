@@ -1,6 +1,10 @@
 <script setup>
-import Button from '@/shared/ui/form/button';
 import { useMovieStore } from '@/entities/movie-card';
+import { useSliceI18n } from '@/shared/i18n';
+import Button from '@/shared/ui/form/button';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+import en from '../locales/en.json';
 
 const props = defineProps({
   movie: {
@@ -11,6 +15,8 @@ const props = defineProps({
 
 const movieStore = useMovieStore();
 
+const { t } = useSliceI18n('movieWatched', { ru, ua, en });
+
 const handleToggleWatched = () => {
   movieStore.toggleWatched(props.movie.id);
 };
@@ -18,10 +24,8 @@ const handleToggleWatched = () => {
 
 <template>
   <Button @click="handleToggleWatched">
-    <span>{{ movie.isWatched ? 'Unwatched' : 'Watched' }}</span>
+    <span>
+      {{ movie.isWatched ? t('notWatched') : t('isWatched') }}
+    </span>
   </Button>
 </template>
-
-<style lang="scss" scoped>
-@use '@helpers' as *;
-</style>

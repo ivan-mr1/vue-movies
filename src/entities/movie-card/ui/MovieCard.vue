@@ -2,7 +2,11 @@
 import { computed } from 'vue';
 import { ImdbIcon } from '@/shared/ui/icons';
 import { formatDate } from '@/shared/lib';
+import { useSliceI18n } from '@/shared/i18n';
 import { TMDB_IMAGE_BASE, POSTER_SIZE } from '../config';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+import en from '../locales/en.json';
 
 const props = defineProps({
   movie: {
@@ -11,13 +15,15 @@ const props = defineProps({
   },
 });
 
+const { t } = useSliceI18n('movieCard', { ru, ua, en });
+
 const posterUrl = computed(() => {
   if (!props.movie.poster_path) return null;
   return `${TMDB_IMAGE_BASE}${POSTER_SIZE}${props.movie.poster_path}`;
 });
 
 const rating = computed(() => {
-  return props.movie.vote_average ? props.movie.vote_average.toFixed(1) : 'N/A';
+  return props.movie.vote_average ? props.movie.vote_average.toFixed(1) : t('noRating');
 });
 </script>
 
@@ -32,10 +38,10 @@ const rating = computed(() => {
       height="225"
       class="movie__img"
     />
-    <div v-else class="movie__img-placeholder">No Poster</div>
+    <div v-else class="movie__img-placeholder">{{ t('noPoster') }}</div>
 
     <div class="movie__inner">
-      <h3 class="movie__title">{{ movie.original_title || 'Unknown Title' }}</h3>
+      <h3 class="movie__title">{{ movie.original_title || t('unknownTitle') }}</h3>
 
       <div class="movie__rating">
         <ImdbIcon />
@@ -43,7 +49,7 @@ const rating = computed(() => {
       </div>
 
       <time v-if="movie.release_date" class="movie__date" :datetime="movie.release_date">
-        Release: {{ formatDate(movie.release_date) }}
+        {{ t('release') }}: {{ formatDate(movie.release_date) }}
       </time>
 
       <div v-if="movie.overview" class="movie__overview">
@@ -56,7 +62,6 @@ const rating = computed(() => {
     </div>
   </article>
 </template>
-
 <style lang="scss" scoped>
 .movie {
   --size-image: 150px;

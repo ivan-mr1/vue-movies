@@ -1,7 +1,11 @@
 <script setup>
 import { computed } from 'vue';
+import { useSliceI18n } from '@/shared/i18n';
 import { useMovieStore } from '@/entities/movie-card';
 import { HomeIcon, SearchIcon, FavoriteIcon, EyeIcon } from '@/shared/ui/icons';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+import en from '../locales/en.json';
 
 defineProps({
   isOpen: {
@@ -12,16 +16,33 @@ defineProps({
 
 const movieStore = useMovieStore();
 
+const { t } = useSliceI18n('menu', { ru, ua, en });
+
 const navigation = computed(() => [
-  { to: 'Home', label: 'All Movies', count: movieStore.totalCountMovies, icon: HomeIcon },
-  { to: 'Search', label: 'Search', count: null, icon: SearchIcon },
+  {
+    to: 'Home',
+    label: t('allMovies'),
+    count: movieStore.totalCountMovies,
+    icon: HomeIcon,
+  },
+  {
+    to: 'Search',
+    label: t('search'),
+    count: null,
+    icon: SearchIcon,
+  },
   {
     to: 'Favorite',
-    label: 'Favorites',
+    label: t('favorites'),
     count: movieStore.favoriteMovies.length,
     icon: FavoriteIcon,
   },
-  { to: 'Watched', label: 'Watched', count: movieStore.watchedMovies.length, icon: EyeIcon },
+  {
+    to: 'Watched',
+    label: t('watched'),
+    count: movieStore.watchedMovies.length,
+    icon: EyeIcon,
+  },
 ]);
 </script>
 
@@ -89,7 +110,7 @@ const navigation = computed(() => [
     align-items: center;
     row-gap: rem(10);
 
-    @include adaptive-clamp('column-gap', 30, 15);
+    @include adaptive-clamp('column-gap', 25, 10);
 
     @media (max-width: em(767.98)) {
       flex-direction: column;

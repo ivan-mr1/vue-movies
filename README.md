@@ -2,7 +2,7 @@
 
 - Deploy: [link](https://vue-movies-lemon.vercel.app/)
 
-- Technologies: HTML, SCSS, Vue.js, Axios, REST API, Pinia, Vite, Eslint, Stylelint, Prettier
+- Technologies: HTML, SCSS, Vue.js, i18n, Axios, REST API, Pinia, Vite, Eslint, Stylelint, Prettier
 
 - Google Page Speed:
   <img alt="image" src="https://github.com/user-attachments/assets/beac32c6-f19a-4f51-bb05-4253524ab119" />

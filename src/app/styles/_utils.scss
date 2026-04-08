@@ -35,14 +35,14 @@ p {
 .disabled {
   opacity: 0.5;
   cursor: default;
-  pointer-events: none; // запрещаем взаимодействие
+  pointer-events: none;
 }
 
-// .hidden-mobile {
-//   @include mobile {
-//     display: none !important;
-//   }
-// }
+.hidden-mobile {
+  @include mobile {
+    display: none !important;
+  }
+}
 
 .visible-mobile {
   @include mobile-above {

@@ -20,6 +20,7 @@ const searchStore = useSearchStore();
     <p>Nothing found for the search query "{{ searchStore.searchMovieText }}"</p>
   </div>
 </template>
+
 <style lang="scss" scoped>
 @use '@helpers' as *;
 

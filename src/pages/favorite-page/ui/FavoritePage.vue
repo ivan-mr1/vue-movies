@@ -1,6 +1,13 @@
 <script setup>
 import { useMovieStore } from '@/entities/movie-card';
+import { useSliceI18n } from '@/shared/i18n';
+import Message from '@/shared/ui/message';
 import MovieList from '@/widgets/movie-list';
+import ru from '../locales/ru.json';
+import ua from '../locales/ua.json';
+import en from '../locales/en.json';
+
+const { t } = useSliceI18n('moviePage', { ru, ua, en });
 
 const movieStore = useMovieStore();
 </script>
@@ -9,13 +16,9 @@ const movieStore = useMovieStore();
   <div class="page">
     <MovieList
       v-if="movieStore.favoriteMovies.length > 0"
-      title="Favorite movies"
+      :title="t('title')"
       :movies="movieStore.favoriteMovies"
     />
-    <div v-else class="empty-message">
-      <p>Your favorite list is empty. Go to search and add some gems!</p>
-    </div>
+    <Message v-else :text="t('empty')" />
   </div>
 </template>
-
-<style scoped lang="scss"></style>

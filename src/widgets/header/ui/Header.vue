@@ -3,6 +3,7 @@ import { useHeaderLogic } from '../model/useHeader';
 import Logo from '@/shared/ui/logo';
 import Menu from './Menu.vue';
 import { Burger1 } from './burger-button';
+import Actions from './actions/Actions.vue';
 
 const props = defineProps({
   isHiddenHeader: {
@@ -11,7 +12,7 @@ const props = defineProps({
   },
 });
 
-const { headerRef, isMenuOpen, isScrolled, isHidden, toggleMenu, closeMenu, onMenuLinkClick } =
+const { isMenuOpen, isScrolled, isHidden, toggleMenu, closeMenu, onMenuLinkClick } =
   useHeaderLogic(props);
 </script>
 
@@ -44,6 +45,7 @@ const { headerRef, isMenuOpen, isScrolled, isHidden, toggleMenu, closeMenu, onMe
         @click.self="closeMenu"
       >
         <Menu :is-open="isMenuOpen" @click="onMenuLinkClick" />
+        <Actions />
       </div>
 
       <Burger1 :is-active="isMenuOpen" @click="toggleMenu" />
@@ -92,27 +94,17 @@ const { headerRef, isMenuOpen, isScrolled, isHidden, toggleMenu, closeMenu, onMe
     @include adaptive-clamp('min-height', 100, 65);
   }
 
+  &__logo,
+  &__actions {
+    position: relative;
+    z-index: 5;
+  }
+
   &__overlay {
     display: flex;
     justify-content: space-between;
     align-items: center;
     column-gap: 1rem;
-
-    @media (max-width: em(767.98)) {
-      position: fixed;
-      inset: 0;
-      z-index: 2;
-      background-color: rgba(0, 0, 0, 0.5);
-      visibility: hidden;
-      opacity: 0;
-      transition: all 0.3s ease;
-      display: block;
-
-      &.is-active {
-        visibility: visible;
-        opacity: 1;
-      }
-    }
   }
 }
 </style>
