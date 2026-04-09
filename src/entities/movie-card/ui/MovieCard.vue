@@ -69,7 +69,7 @@ const rating = computed(() => {
   grid-template-columns: var(--size-image) 1fr;
   column-gap: 20px;
   margin-bottom: 20px;
-  border: 1px solid #efefef;
+  border: 1px solid var(--color-card-border);
 
   border-radius: 5px;
 

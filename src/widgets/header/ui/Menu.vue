@@ -65,8 +65,8 @@ const navigation = computed(() => [
 <style scoped lang="scss">
 .menu {
   --menu-link: var(--color-light);
-  --menu-background: #1f2a32;
-  --menu-background-before: #1f2a32;
+  --menu-background: var(--color-menu-bg);
+  --menu-background-before: var(--color-menu-bg);
 
   @media (max-width: em(767.98)) {
     position: fixed;
@@ -127,7 +127,7 @@ const navigation = computed(() => [
     color: var(--menu-link);
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
     @media (max-width: em(767.98)) {
       height: 44px;
       font-size: rem(26);

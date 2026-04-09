@@ -4,7 +4,7 @@ defineProps({
   alt: { type: String, default: 'Logo' },
   width: { type: Number, default: 50 },
   height: { type: Number, default: 50 },
-  text: { type: String, default: 'Logo' },
+  text: { type: String, default: '' },
   lazy: { type: Boolean, default: false },
   ariaLabel: { type: String, default: 'Home' },
 });
@@ -20,7 +20,7 @@ defineProps({
       :height="height"
       :loading="lazy ? 'lazy' : 'eager'"
     />
-    <div>{{ text }}</div>
+    <div v-if="text">{{ text }}</div>
   </div>
 </template>
 
@@ -30,9 +30,9 @@ defineProps({
 .logo {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 3px;
   color: var(--color-orange);
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
 
   @include hover {

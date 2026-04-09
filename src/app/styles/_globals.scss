@@ -8,6 +8,9 @@ body {
   line-height: var(--line-height);
   color: var(--color-grey);
   background-color: var(--color-bcg-body);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 
   [data-scroll-lock] & {
     overflow: hidden;

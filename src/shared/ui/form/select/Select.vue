@@ -65,11 +65,11 @@ onUnmounted(() => document.removeEventListener('click', close));
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
-    padding: 0 8px;
-    border: 1px solid #c7c7c7;
+    gap: 5px;
+    padding: 0 5px;
+    border: 1px solid var(--select-border);
     border-radius: 8px;
-    background: #fff;
+    background: var(--select-bg);
     cursor: pointer;
     transition: all 0.2s;
 
@@ -84,7 +84,7 @@ onUnmounted(() => document.removeEventListener('click', close));
 
   &__value {
     font-size: 14px;
-    color: #181c29;
+    color: var(--select-text);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -92,6 +92,7 @@ onUnmounted(() => document.removeEventListener('click', close));
 
   &__icon {
     flex-shrink: 0;
+    color: var(--select-text);
     transition: transform 0.3s;
     .is-open & {
       transform: rotate(180deg);
@@ -104,10 +105,10 @@ onUnmounted(() => document.removeEventListener('click', close));
     top: calc(100% + 4px);
     left: 0;
     min-width: 100%;
-    background: #fff;
-    border: 1px solid #eee;
+    background: var(--select-bg);
+    border: 1px solid var(--select-border);
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px var(--select-shadow);
     z-index: 50;
     padding: 4px 0;
     margin: 0;
@@ -117,14 +118,15 @@ onUnmounted(() => document.removeEventListener('click', close));
   &__item {
     padding: 8px 12px;
     font-size: 14px;
+    color: var(--select-text);
     cursor: pointer;
     transition: background 0.2s;
 
     &:hover {
-      background: #f5f5f5;
+      background: var(--select-hover-bg);
     }
     &.is-active {
-      background: #fff5f0;
+      background: var(--select-active-bg);
       color: #f60;
       font-weight: 600;
     }
